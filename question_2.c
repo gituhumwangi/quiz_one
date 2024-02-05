@@ -3,53 +3,53 @@
 
 // Define the course structure
 struct Course {
-    char course_code[10];
-    char course_name[50];
+    char code[10];
+    char name[50];
 };
 
 // Define the grade structure
 struct Grade {
-    int mark;
-    char the_grade;
+    int score;
+    char letter_grade;
 };
 
 // Define the student structure
 struct Student {
-    char reg_number[20];
-    char name[50];
-    int age;
-    struct Course course;
-    struct Grade grades;
+    char registration_number[20];
+    char full_name[50];
+    int student_age;
+    struct Course enrolled_course;
+    struct Grade student_grades;
 };
 
 // Function prototypes
-void addStudent(struct Student students[], int *numStudents);
-void editStudent(struct Student students[], int numStudents);
-void addMarksAndCalculateGrades(struct Student students[], int numStudents);
+void addNewStudent(struct Student students[], int *total_students);
+void updateStudentDetails(struct Student students[], int total_students);
+void addScoresAndCalculateGrades(struct Student students[], int total_students);
 
 int main() {
     struct Student students[40];
-    int numStudents = 0;
-    int choice;
+    int total_students = 0;
+    int user_choice;
 
     do {
         printf("\nMenu:\n");
-        printf("1. Add a student\n");
-        printf("2. Edit a student's details\n");
-        printf("3. Add marks and calculate grades\n");
+        printf("1. Add a new student\n");
+        printf("2. Update a student's details\n");
+        printf("3. Add scores and calculate grades\n");
         printf("4. Exit\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+        scanf("%d", &user_choice);
 
-        switch (choice) {
+        switch (user_choice) {
             case 1:
-                addStudent(students, &numStudents);
+                addNewStudent(students, &total_students);
                 break;
             case 2:
-                editStudent(students, numStudents);
+                updateStudentDetails(students, total_students);
                 break;
             case 3:
-                addMarksAndCalculateGrades(students, numStudents);
+                addScoresAndCalculateGrades(students, total_students);
                 break;
             case 4:
                 printf("Exiting program.\n");
@@ -57,51 +57,51 @@ int main() {
             default:
                 printf("Invalid choice. Please enter a valid option.\n");
         }
-    } while (choice != 4);
+    } while (user_choice != 4);
 
     return 0;
 }
 
-void addStudent(struct Student students[], int *numStudents) {
-    if (*numStudents < 40) {
+void addNewStudent(struct Student students[], int *total_students) {
+    if (*total_students < 40) {
         printf("Enter student details:\n");
         printf("Registration Number: ");
-        scanf("%s", students[*numStudents].reg_number);
-        printf("Name: ");
-        scanf("%s", students[*numStudents].name);
+        scanf("%s", students[*total_students].registration_number);
+        printf("Full Name: ");
+        scanf("%s", students[*total_students].full_name);
         printf("Age: ");
-        scanf("%d", &students[*numStudents].age);
+        scanf("%d", &students[*total_students].student_age);
         printf("Course Code: ");
-        scanf("%s", students[*numStudents].course.course_code);
+        scanf("%s", students[*total_students].enrolled_course.code);
         printf("Course Name: ");
-        scanf("%s", students[*numStudents].course.course_name);
+        scanf("%s", students[*total_students].enrolled_course.name);
 
-        (*numStudents)++;
+        (*total_students)++;
         printf("Student added successfully.\n");
     } else {
         printf("Maximum number of students reached.\n");
     }
 }
 
-void editStudent(struct Student students[], int numStudents) {
-    if (numStudents > 0) {
+void updateStudentDetails(struct Student students[], int total_students) {
+    if (total_students > 0) {
         char regNumber[20];
-        printf("Enter the registration number of the student to edit: ");
+        printf("Enter the registration number of the student to update details: ");
         scanf("%s", regNumber);
 
-        for (int i = 0; i < numStudents; i++) {
-            if (strcmp(students[i].reg_number, regNumber) == 0) {
+        for (int i = 0; i < total_students; i++) {
+            if (strcmp(students[i].registration_number, regNumber) == 0) {
                 printf("Enter new details for the student:\n");
                 printf("Registration Number: ");
-                scanf("%s", students[i].reg_number);
-                printf("Name: ");
-                scanf("%s", students[i].name);
+                scanf("%s", students[i].registration_number);
+                printf("Full Name: ");
+                scanf("%s", students[i].full_name);
                 printf("Age: ");
-                scanf("%d", &students[i].age);
+                scanf("%d", &students[i].student_age);
                 printf("Course Code: ");
-                scanf("%s", students[i].course.course_code);
+                scanf("%s", students[i].enrolled_course.code);
                 printf("Course Name: ");
-                scanf("%s", students[i].course.course_name);
+                scanf("%s", students[i].enrolled_course.name);
 
                 printf("Student details updated successfully.\n");
                 return;
@@ -110,41 +110,41 @@ void editStudent(struct Student students[], int numStudents) {
 
         printf("Student with registration number %s not found.\n", regNumber);
     } else {
-        printf("No students to edit.\n");
+        printf("No students to update.\n");
     }
 }
 
-void addMarksAndCalculateGrades(struct Student students[], int numStudents) {
-    if (numStudents > 0) {
+void addScoresAndCalculateGrades(struct Student students[], int total_students) {
+    if (total_students > 0) {
         char regNumber[20];
-        printf("Enter the registration number of the student to add marks: ");
+        printf("Enter the registration number of the student to add scores: ");
         scanf("%s", regNumber);
 
-        for (int i = 0; i < numStudents; i++) {
-            if (strcmp(students[i].reg_number, regNumber) == 0) {
-                printf("Enter marks for the student:\n");
-                printf("Mark: ");
-                scanf("%d", &students[i].grades.mark);
+        for (int i = 0; i < total_students; i++) {
+            if (strcmp(students[i].registration_number, regNumber) == 0) {
+                printf("Enter scores for the student:\n");
+                printf("Score: ");
+                scanf("%d", &students[i].student_grades.score);
 
-                // Calculate the grade based on the mark
-                if (students[i].grades.mark > 69)
-                    students[i].grades.the_grade = 'A';
-                else if (students[i].grades.mark > 59)
-                    students[i].grades.the_grade = 'B';
-                else if (students[i].grades.mark > 49)
-                    students[i].grades.the_grade = 'C';
-                else if (students[i].grades.mark > 39)
-                    students[i].grades.the_grade = 'D';
+                // Calculate the grade based on the score
+                if (students[i].student_grades.score > 69)
+                    students[i].student_grades.letter_grade = 'A';
+                else if (students[i].student_grades.score > 59)
+                    students[i].student_grades.letter_grade = 'B';
+                else if (students[i].student_grades.score > 49)
+                    students[i].student_grades.letter_grade = 'C';
+                else if (students[i].student_grades.score > 39)
+                    students[i].student_grades.letter_grade = 'D';
                 else
-                    students[i].grades.the_grade = 'E';
+                    students[i].student_grades.letter_grade = 'E';
 
-                printf("Marks added and grades calculated successfully.\n");
+                printf("Scores added and grades calculated successfully.\n");
                 return;
             }
         }
 
         printf("Student with registration number %s not found.\n", regNumber);
     } else {
-        printf("No students to add marks.\n");
+        printf("No students to add scores.\n");
     }
 }

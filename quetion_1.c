@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // Function prototypes
-int summation(int num, int array[]);
+int total(int num, int array[]);
 int maximum(int num, int array[]);
 
 int main() {
@@ -17,17 +17,17 @@ int main() {
     }
 
     // Function calls
-    int sum = summation(n, arr);
+    int sum = total(n, arr);
     int max = maximum(n, arr);
 
-    printf("The summation is %d\n", sum);
+    printf("The total is %d\n", sum);
     printf("The maximum is %d\n", max);
 
     return 0;
 }
 
 // Function definitions
-int summation(int num, int array[]) {
+int total(int num, int array[]) {
     int sum = 0;
     for (int i = 0; i < num; i++) {
         sum += array[i];
